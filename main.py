@@ -5,6 +5,7 @@ import pyperclip
 import json
 
 # ---------------------------- PASSWORD GENERATOR ------------------------------- #
+# Lists of characters to be used in password generation
 letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v',
            'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R',
            'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
@@ -13,6 +14,10 @@ symbols = ['!', '#', '$', '%', '&', '(', ')', '*', '+']
 
 
 def generate_pass():
+    """
+    Function to generate a random password and copy it to the clipboard.
+    The password consists of 8-10 random letters, 2-4 random symbols, and 2-4 random numbers.
+    """
     password_list = ([choice(letters) for _ in range(randint(8, 10))]
                      + [choice(symbols) for _ in range(randint(2, 4))]
                      + [choice(numbers) for _ in range(randint(2, 4))])
@@ -28,6 +33,9 @@ def generate_pass():
 # ---------------------------- SAVE PASSWORD ------------------------------- #
 
 def field_refresh():
+    """
+    Function to clear all input fields and set the username field to a default value.
+    """
     website_input.delete(0, END)
     password_input.delete(0, END)
     username_input.delete(0, END)
@@ -36,6 +44,11 @@ def field_refresh():
 
 # ---------------------------- SAVE PASSWORD ------------------------------- #
 def save():
+    """
+    Function to save the website, username, and password to a JSON file.
+    If the file does not exist, it is created.
+    If any fields are empty, an error message is displayed.
+    """
     web_in = website_input.get()
     user_in = username_input.get()
     pass_in = password_input.get()
@@ -65,6 +78,10 @@ def save():
 
 # ---------------------------- SEARCH PASSWORD ------------------------------- #
 def find_pass():
+    """
+    Function to retrieve the username and password for a given website from a JSON file.
+    If the file or the website does not exist, an error message is displayed.
+    """
     web_in = website_input.get()
 
     if len(web_in) == 0:
@@ -89,16 +106,18 @@ def find_pass():
 
 
 # ---------------------------- UI SETUP ------------------------------- #
+# Creating the main window
 window = Tk()
 window.title = "Password Manager"
 window.config(padx=50, pady=50)
 
+# Creating the canvas for the logo
 canvas = Canvas(width=200, height=200)
 lock = PhotoImage(file="./logo.png")
 canvas.create_image(100, 100, image=lock)
 canvas.grid(column=1, row=0)
 
-# Labels
+# Creating the labels
 website = Label(text="Website:")
 website.grid(column=0, row=1)
 
@@ -108,7 +127,7 @@ username.grid(column=0, row=2)
 password = Label(text="Password:")
 password.grid(column=0, row=3)
 
-# Inputs
+# Creating the input fields
 website_input = Entry(width=18)
 website_input.grid(column=1, row=1)
 website_input.focus()
@@ -120,7 +139,7 @@ username_input.insert(index=0, string="placeholder@gmail.com")
 password_input = Entry(width=18)
 password_input.grid(column=1, row=3)
 
-# Buttons
+# Creating the buttons
 search_button = Button(width=9, text="Search", command=find_pass)
 search_button.grid(column=2, row=1)
 
@@ -130,4 +149,5 @@ gen_pass_button.grid(column=2, row=3)
 add_button = Button(width=28, text="Add", command=save)
 add_button.grid(column=1, row=4, columnspan=2)
 
+# Starting the main loop
 window.mainloop()
