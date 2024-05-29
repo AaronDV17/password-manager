@@ -1,1 +1,1 @@
-# Password Manager built with Tkinter
+# Password Manager w/ Tkinter GUI
